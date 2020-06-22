@@ -39,7 +39,23 @@ sentences = train['comment_text'].fillna("DUMMY_VALUE").values
 possible_labels = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
 targets = train[possible_labels].values
 
-# analysis mean, min, max of sequence length
-seq_length = [len(s.split()) for s in sentences]
-print(min(seq_length))
-print(max(seq_length))
+# analysing min, max of sequence length
+seq_length = np.array([len(s.split()) for s in sentences])
+# print(np.min(seq_length))
+# print(np.max(seq_length))
+# print(int(np.mean(seq_length)))
+
+# Tokenization and index creation
+tokenizer = Tokenizer(num_words=MAX_VOCAB_SIZE)
+tokenizer.fit_on_texts(sentences)
+sequences = tokenizer.texts_to_sequences(sentences)
+
+# word2index  : word ---> integer mapping
+word2idx = tokenizer.word_index
+print(f"FOUND: {len(word2idx)} unique tokens in data...")
+
+# Paadding to make all the vectors
+# in the sequences of same lentgh  [N x T]
+data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
+print(f"Shape of data tensor: {data.shape}")
+
