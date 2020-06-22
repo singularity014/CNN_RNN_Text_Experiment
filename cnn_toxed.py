@@ -34,6 +34,7 @@ with open(emb_path, 'r') as fil:
                 }
     print(f"FOUND: {len(word2vec)} word vectors")
 
+    
 # prepare Text samples and Labels
 print('Loading comments ....')
 train = pd.read_csv('data/kaggle_toxic_comment_challenge/train.csv')
