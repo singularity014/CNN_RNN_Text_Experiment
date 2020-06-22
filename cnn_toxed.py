@@ -31,5 +31,14 @@ with open(emb_path, 'r') as fil:
                 }
     print(f"FOUND: {len(word2vec)} word vectors")
 
+# prepare Text samples and Labels
+print('Loading comments ....')
+train = pd.read_csv('data/kaggle_toxic_comment_challenge/train.csv')
+sentences = train['comment_text'].fillna("DUMMY_VALUE").values
+possible_labels = ["toxic", "severe_toxic", "obscene", "threat", "insult", "identity_hate"]
+targets = train[possible_labels].values
 
-
+# analysis mean, min, max of sequence length
+seq_length = [len(s.split()) for s in sentences]
+print(min(seq_length))
+print(max(seq_length))
