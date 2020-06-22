@@ -25,7 +25,7 @@ from configurations import *
 emb_path = os.path.expanduser("~") + f'/EMBEDDINGS/glove.6B.{EMBEDDIN_DIM}d.txt'
 # wordvector
 word2vec = {}
-
+# word vector creation
 with open(emb_path, 'r') as fil:
     for line in fil:
         word = line.split()[0]
