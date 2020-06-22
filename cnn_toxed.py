@@ -23,16 +23,13 @@ from configurations import *
 
 # Embedding path...
 emb_path = os.path.expanduser("~") + f'/EMBEDDINGS/glove.6B.{EMBEDDIN_DIM}d.txt'
-# wordvector
-word2vec = {}
-# word vector creation
+# words pointing to vectors dict
 with open(emb_path, 'r') as fil:
-    for line in fil:
-        word = line.split()[0]
-        vec = np.asarray(line.split()[1:], dtype='float32')
-        word2vec[word] = vec
+    word2vec = {
+                    line.split()[0]: np.asarray(line.split()[1:])
+                    for line in fil
+                }
     print(f"FOUND: {len(word2vec)} word vectors")
-
 
 
 
