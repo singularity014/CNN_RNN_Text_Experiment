@@ -10,3 +10,5 @@ VALIDATION_SPLIT = 0.2
 BATCH_SIZE = 128
 EPOCH = 10
 # -----------------------
+#* Note - Alternative methods like histogram evaluation etc can also be used 
+# to get these numbers
