@@ -20,6 +20,8 @@ from keras.layers import Dense, Input, GlobalMaxPool1D
 from keras.layers import Conv1D, MaxPool1D, Embedding
 # ----------------------------------------------------
 from configurations import *
+# -----------------------------------------------------
+
 
 
 # Embedding path...
