@@ -89,7 +89,7 @@ embedding_layer = Embedding(
     trainable=False
 )
 
-# 2) MODEL LAYERS...........................................
+# 2) MODEL LAYERS............................................
 # Creating a 1-D ConvNet with Global Max POoling
 # Since the input is size N X T ,,,so we pass T
 # which is MAX_SEQUENCE_LENGTH
@@ -104,7 +104,7 @@ layer = GlobalMaxPool1D()(layer)
 layer = Dense(128, activation='relu')(layer)
 output = Dense(len(possible_labels), activation='sigmoid')(layer)
 
-# ----------------- MODEL COMPILE -------------------------
+# ----------------- MODEL COMPILE -------------------------..
 model = Model(input_, output)
 model.compile(
     loss='binary_crossentropy',
