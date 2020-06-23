@@ -17,9 +17,12 @@ import matplotlib.pyplot as plt
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.layers import Dense, Input, GlobalMaxPool1D
+from keras.models import Model
 from keras.layers import Conv1D, MaxPool1D, Embedding
 # ----------------------------------------------------
 from configurations import *
+from sklearn.metrics import roc_auc_score
+# ----------------------------------------------------
 
 
 # Embedding path...
@@ -59,3 +62,83 @@ print(f"FOUND: {len(word2idx)} unique tokens in data...")
 data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 print(f"Shape of data tensor: {data.shape}")
 
+# EMBEDDING MATRIX prepare
+print('Filling pre-trained embedding matrix....')
+num_words = min(MAX_VOCAB_SIZE, len(word2idx)+1)
+# shape = V x D
+embedding_matrix = np.zeros((num_words, EMBEDDIN_DIM))
+for word, i in word2idx.items():
+    if i < MAX_VOCAB_SIZE:
+        embedding_vector = word2vec.get(word, None)
+        if embedding_vector is not None:
+            embedding_matrix[i] = embedding_vector
+print(embedding_matrix.shape)
+
+
+# ----------------- MODEL DEVELOPMENT -------------------------
+
+# 1) EMBEDDING LAYER .......
+embedding_layer = Embedding(
+    num_words,
+    EMBEDDIN_DIM,
+    weights=[embedding_matrix],
+    input_length=MAX_SEQUENCE_LENGTH,
+    trainable=False
+)
+
+
+# 2) MODEL LAYERS...........................................
+# Creating a 1-D ConvNet with Global Max POoling
+# Since the input is size N X T ,,,so we pass T
+# which is MAX_SEQUENCE_LENGTH
+input_ = Input(shape=(MAX_SEQUENCE_LENGTH, ))
+layer = embedding_layer(input_)
+layer = Conv1D(128, 3, activation='relu')(layer)
+layer = MaxPool1D(3)(layer)
+layer = Conv1D(128, 3, activation='relu')(layer)
+layer = MaxPool1D(3)(layer)
+layer = Conv1D(128, 3, activation='relu')(layer)
+layer = GlobalMaxPool1D()(layer)
+layer = Dense(128, activation='relu')(layer)
+output = Dense(len(possible_labels), activation='sigmoid')(layer)
+
+# ----------------- MODEL COMPILE -------------------------
+model = Model(input_, output)
+model.compile(
+    loss='binary_crossentropy',
+    optimizer='rmsprop',
+    metrics=['accuracy']
+)
+
+# ----------------- MODEL TRAINING --------------------------
+train = model.fit(
+    data,
+    targets,
+    batch_size=BATCH_SIZE,
+    epochs=EPOCH,
+    validation_split=VALIDATION_SPLIT
+)
+
+# ---------------- METRICS CHECK ----------------------------
+# losses
+plt.plot(train.history['loss'], label='loss')
+plt.plot(train.history['val_loss'], label='val_loss')
+plt.legend()
+plt.show()
+
+# accuracies
+plt.plot(train.history['acc'], label='acc')
+plt.plot(train.history['val_acc'], label='val_loss')
+plt.legend()
+plt.show()
+
+# --------- AUC check -------------------------------------
+predictions = model.predict(data)
+# Note: Data has been split automatically into test, thanks to keras feature!
+# This can be seen in model.fit 'VALIDATION SPLIT'
+aucs= []
+for i in range(6):
+    auc = roc_auc_score(targets[:, i], predictions[:, i])
+    aucs.append(auc)
+print()
+print(f"AREA UNDER CURVE : {np.mean(aucs)}")
