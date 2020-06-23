@@ -86,7 +86,6 @@ embedding_layer = Embedding(
     trainable=False
 )
 
-
 # 2) MODEL LAYERS...........................................
 # Creating a 1-D ConvNet with Global Max POoling
 # Since the input is size N X T ,,,so we pass T
@@ -140,5 +139,6 @@ aucs= []
 for i in range(6):
     auc = roc_auc_score(targets[:, i], predictions[:, i])
     aucs.append(auc)
+    
 print()
 print(f"AREA UNDER CURVE : {np.mean(aucs)}")
