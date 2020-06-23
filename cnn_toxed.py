@@ -127,14 +127,15 @@ plt.legend()
 plt.show()
 
 # accuracies
-plt.plot(train.history['acc'], label='acc')
-plt.plot(train.history['val_acc'], label='val_loss')
+plt.plot(train.history['accuracy'], label='accuracy')
+plt.plot(train.history['val_accuracy'], label='val_accuracy')
 plt.legend()
 plt.show()
 
 # --------- AUC check -------------------------------------
 predictions = model.predict(data)
 # Note: Data has been split automatically into test, thanks to keras feature!
+# plot the mean AUC over each label
 # This can be seen in model.fit 'VALIDATION SPLIT'
 aucs= []
 for i in range(6):
