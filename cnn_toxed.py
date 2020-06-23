@@ -79,7 +79,6 @@ print(embedding_matrix.shape)
 
 
 # ----------------- MODEL DEVELOPMENT -------------------------
-
 # 1) EMBEDDING LAYER .......
 embedding_layer = Embedding(
     num_words,
