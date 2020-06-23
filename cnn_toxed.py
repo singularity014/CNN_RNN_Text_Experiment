@@ -21,6 +21,7 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.layers import Dense, Input, GlobalMaxPool1D
 from keras.models import Model
 from keras.layers import Conv1D, MaxPool1D, Embedding
+
 # ----------------------------------------------------
 from configurations import *
 from sklearn.metrics import roc_auc_score
