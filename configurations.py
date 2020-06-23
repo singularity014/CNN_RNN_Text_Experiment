@@ -9,7 +9,7 @@ MAX_VOCAB_SIZE = 20000
 EMBEDDIN_DIM = 100
 VALIDATION_SPLIT = 0.2
 BATCH_SIZE = 128
-EPOCH = 10
+EPOCH = 8
 # -----------------------
 # Note -
 # Alternative methods like histogram evaluation etc can also be used 

@@ -9,7 +9,6 @@ from builtins import range
 
 # ----------- Utils ---------------------------------
 import os
-import sys
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -19,7 +18,7 @@ from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.layers import Dense, Input, GlobalMaxPool1D
 from keras.models import Model
-from keras.layers import Conv1D, MaxPool1D, Embedding
+from keras.layers import Conv1D, MaxPool1D, Embedding, Dropout
 
 # ----------------------------------------------------
 from configurations import *
@@ -94,8 +93,10 @@ embedding_layer = Embedding(
 input_ = Input(shape=(MAX_SEQUENCE_LENGTH, ))
 layer = embedding_layer(input_)
 layer = Conv1D(128, 3, activation='relu')(layer)
+layer = Dropout(0.3)(layer)
 layer = MaxPool1D(3)(layer)
 layer = Conv1D(128, 3, activation='relu')(layer)
+layer = Dropout(0.4)(layer)
 layer = MaxPool1D(3)(layer)
 layer = Conv1D(128, 3, activation='relu')(layer)
 layer = GlobalMaxPool1D()(layer)
