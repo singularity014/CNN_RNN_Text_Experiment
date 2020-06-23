@@ -118,6 +118,7 @@ train = model.fit(
     epochs=EPOCH,
     validation_split=VALIDATION_SPLIT
 )
+
 # ---------------- METRICS CHECK ----------------------------
 # losses
 plt.plot(train.history['loss'], label='loss')
