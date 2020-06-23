@@ -2,7 +2,6 @@
 @author: Prafull SHARMA
 @Data Set: Kaggle Toxc comment dataset
 '''
-
 from __future__ import print_function, division
 from builtins import range
 # for updating in future
