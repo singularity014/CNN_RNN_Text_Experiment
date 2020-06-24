@@ -133,6 +133,7 @@ plt.show()
 # accuracies
 plt.plot(train.history['accuracy'], label='accuracy')
 plt.plot(train.history['val_accuracy'], label='val_accuracy')
+
 plt.legend()
 plt.show()
 
