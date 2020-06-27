@@ -62,7 +62,7 @@ sequences = tokenizer.texts_to_sequences(sentences)
 word2idx = tokenizer.word_index
 print(f"FOUND: {len(word2idx)} unique tokens in data...")
 
-# Paadding to make all the vectors
+# Paadding to make all the vectors .....
 # in the sequences of same lentgh  [N x T]
 data = pad_sequences(sequences, maxlen=MAX_SEQUENCE_LENGTH)
 print(f"Shape of data tensor: {data.shape}")
