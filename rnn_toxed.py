@@ -28,8 +28,6 @@ from configurations import *
 from sklearn.metrics import roc_auc_score
 
 # ----------------------------------------------------
-
-
 # Embedding path...
 emb_path = os.path.expanduser("~") + f'/EMBEDDINGS/glove.6B.{EMBEDDIN_DIM}d.txt'
 # words pointing to vectors dict
